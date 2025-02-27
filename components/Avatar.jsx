@@ -3,22 +3,16 @@ import { supabase } from '../lib/supabase'
 import { StyleSheet, View, Alert, Image, Button } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
 
-interface Props {
-  size: number
-  url: string | null
-  onUpload: (filePath: string) => void
-}
-
-export default function Avatar({ url, size = 150, onUpload }: Props) {
+export default function Avatar({ url, size = 150, onUpload }) {
   const [uploading, setUploading] = useState(false)
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
+  const [avatarUrl, setAvatarUrl] = useState(null)
   const avatarSize = { height: size, width: size }
 
   useEffect(() => {
     if (url) downloadImage(url)
   }, [url])
 
-  async function downloadImage(path: string) {
+  async function downloadImage(path) {
     try {
       const { data, error } = await supabase.storage
         .from('avatars')
@@ -31,7 +25,7 @@ export default function Avatar({ url, size = 150, onUpload }: Props) {
       const fr = new FileReader()
       fr.readAsDataURL(data)
       fr.onload = () => {
-        setAvatarUrl(fr.result as string)
+        setAvatarUrl(fr.result)
       }
     } catch (error) {
       if (error instanceof Error) {

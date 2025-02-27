@@ -5,7 +5,7 @@ import { Button, Input } from '@rneui/themed'
 import { Session } from '@supabase/supabase-js'
 import Avatar from './Avatar'
 
-export default function Account({ session }: { session: Session }) {
+export default function Account({ session }) {
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState('')
   const [website, setWebsite] = useState('')
@@ -43,15 +43,7 @@ export default function Account({ session }: { session: Session }) {
     }
   }
 
-  async function updateProfile({
-    username,
-    website,
-    avatar_url,
-  }: {
-    username: string
-    website: string
-    avatar_url: string
-  }) {
+  async function updateProfile({ username, website, avatar_url }) {
     try {
       setLoading(true)
       if (!session?.user) throw new Error('No user on the session!')
@@ -84,7 +76,7 @@ export default function Account({ session }: { session: Session }) {
         <Avatar
           size={200}
           url={avatarUrl}
-          onUpload={(url: string) => {
+          onUpload={url => {
             setAvatarUrl(url)
             updateProfile({ username, website, avatar_url: url })
           }}

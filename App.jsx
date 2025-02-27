@@ -6,7 +6,7 @@ import { View } from 'react-native'
 import { Session } from '@supabase/supabase-js'
 
 export default function App() {
-  const [session, setSession] = useState<Session | null>(null)
+  const [session, setSession] = useState(null)
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
